@@ -46,6 +46,18 @@ module.exports = {
           editor.insertText("System.out.println(\"" + selection + " = \" + " + selection + ")");
         }
       }
+      // C
+      else if (editor.getTitle().endsWith(".c")) {
+        // Print statement
+        if (selection.length == 0) {
+          editor.insertText("printf(\"%s\\n\", );");
+          editor.moveLeft(9)
+          // do nothing
+        } else {
+          editor.backspace();
+          editor.insertText("printf(\""+selection+" = %s\\n\", " + selection + ");");
+        }
+      }
     }
   }
 }
