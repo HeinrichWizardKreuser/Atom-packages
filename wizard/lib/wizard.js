@@ -30,8 +30,17 @@ module.exports = {
           editor.insertText("print(\"\")");
           editor.moveLeft(2)
         } else {
-          editor.backspace();
-          editor.insertText("print(\"" + selection + " = \" + " + "str(" + selection + "))");
+          if (selection.indexOf("(") !== -1) {
+            // turn f(x) into print("f("+str(x)+") = " + str(f(x)))
+            var start = selection.substring(0, selection.indexOf("(")+1);
+            var middle = selection.substring(selection.indexOf("(")+1, selection.indexOf(")"));
+            var end = selection.substring(selection.indexOf(")")+1);
+            editor.insertText("print(\"" + start + "\"+str(" + middle + ")" + end +"+\") = \" + " + "str(" + selection + ")))");
+            editor.backspace();
+          } else {
+            editor.backspace();
+            editor.insertText("print(\"" + selection + " = \" + " + "str(" + selection + "))");
+          }
         }
       }
       // JAVA
